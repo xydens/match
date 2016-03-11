@@ -25,14 +25,14 @@ without a prebuilt distribution, but the performance may suffer.
 
 
 ### Elasticsearch
+
 If you just want to generate and compare image signatures, you can skip this
 step. If you want to search over a corpus of millions or billions of image
 signatures, you will need a database backend. We built image-match around
 [Elasticsearch](https://www.elastic.co/).  See download and installation
-instructions [here](https://www.elastic.co/downloads/elasticsearch).
-
 
 ### Install image-match
+
 1. Clone this repository:
 
   ```

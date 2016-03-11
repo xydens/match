@@ -178,7 +178,7 @@ class SignatureDatabaseBase(object):
 
         self.gis = ImageSignature(n=n_grid, crop_percentiles=crop_percentile, *signature_args, **signature_kwargs)
 
-    def add_image(self, path, img=None):
+    def add_image(self, path, img=None, bytestream=False):
         """Add a single image to the database
 
         Args:
@@ -188,7 +188,7 @@ class SignatureDatabaseBase(object):
                 a signature will be generated from data in img (default None)
 
         """
-        rec = make_record(path, self.gis, self.k, self.N, img=img)
+        rec = make_record(path, self.gis, self.k, self.N, img=img, bytestream=bytestream)
         self.insert_single_record(rec)
 
     def search_image(self, path, all_orientations=False, bytestream=False):
@@ -266,7 +266,7 @@ class SignatureDatabaseBase(object):
         return r
 
 
-def make_record(path, gis, k, N, img=None):
+def make_record(path, gis, k, N, img=None, bytestream=False):
     """Makes a record suitable for database insertion.
 
     Note:
@@ -314,7 +314,7 @@ def make_record(path, gis, k, N, img=None):
     record = dict()
     record['path'] = path
     if img is not None:
-        signature = gis.generate_signature(img, bytestream=True)
+        signature = gis.generate_signature(img, bytestream=bytestream)
     else:
         signature = gis.generate_signature(path)
 
