@@ -8,7 +8,7 @@
 
     $ docker run -e ELASTICSEARCH_URL=https://daisy.us-west-1.es.amazonaws.com -it pavlov/match
 
-Match is packaged as a Docker container, making it highly portable and scalable to billions of images. You can configure a few options using environment variables:
+Match is packaged as a Docker container ([pavlov/match](https://hub.docker.com/r/pavlov/match/) on Docker Hub), making it highly portable and scalable to billions of images. You can configure a few options using environment variables:
 
 * **ELASTICSEARCH_URL** *(required)*
 
