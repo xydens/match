@@ -54,7 +54,7 @@ metadata:
   namespace: default
   name: match
 spec:
-  replicas: 4
+  replicas: 2
   selector:
     app: match
   template:
@@ -74,7 +74,176 @@ spec:
 
 ## API
 
-**Coming soon...**
+Match has a simple HTTP API. All request parameters are specified via `application/x-www-form-urlencoded` or `multipart/form-data`.
+
+---
+
+### POST `/add`
+
+Adds an image signature to the database.
+
+#### Parameters
+
+* **url** or **image** *(required)*
+
+  The image to add to the database. It may be provided as a URL via `url` or as a `multipart/form-data` file upload via `image`.
+
+* **filepath** *(required)*
+
+  The path to save the image to in the database. If another image already exists at the given path, it will be overwritten.
+
+#### Example Response
+
+```json
+{
+  "status": "ok",
+  "error": [],
+  "method": "add",
+  "result": []
+}
+```
+
+---
+
+### DELETE `/delete`
+
+Deletes an image signature from the database.
+
+#### Parameters
+
+* **filepath** *(required)*
+
+  The path of the image signature in the database.
+
+#### Example Response
+
+```json
+{
+  "status": "ok",
+  "error": [],
+  "method": "delete",
+  "result": []
+}
+```
+
+---
+
+### POST `/search`
+
+Searches for a similar image in the database. Scores range from 0 to 100, with 100 being a perfect match.
+
+#### Parameters
+
+* **url** or **image** *(required)*
+
+  The image to add to the database. It may be provided as a URL via `url` or as a `multipart/form-data` file upload via `image`.
+
+#### Example Response
+
+```json
+{
+  "status": "ok",
+  "error": [],
+  "method": "search",
+  "result": [
+    {
+      "score": 99.0,
+      "filepath": "http://static.wixstatic.com/media/0149b5_345c8f862e914a80bcfcc98fcd432e97.jpg_srz_614_709_85_22_0.50_1.20_0.00_jpg_srz"
+    }
+  ]
+}
+```
+
+---
+
+### POST `/compare`
+
+Searches for a similar image in the database. Scores range from 0 to 100, with 100 being a perfect match.
+
+#### Parameters
+
+* **url1** or **image1**, **url2** or **image2** *(required)*
+
+  The images to compare. They may be provided as a URL via `url1`/`url2` or as a `multipart/form-data` file upload via `image1`/`image2`.
+
+#### Example Response
+
+```json
+{
+  "status": "ok",
+  "error": [],
+  "method": "compare",
+  "result": [
+    {
+      "score": 99.0
+    }
+  ]
+```
+
+---
+
+### GET `/count`
+
+Count the number of image signatures in the database.
+
+#### Example Response
+
+```json
+{
+  "status": "ok",
+  "error": [],
+  "method": "list",
+  "result": [420]
+}
+```
+
+---
+
+### GET `/list`
+
+Lists the file paths for the image signatures in the database.
+
+#### Parameters
+
+* **offset** *(default: 0)*
+
+  The location in the database to begin listing image paths.
+
+* **limit** *(default: 20)*
+
+  The number of image paths to retrieve.
+
+#### Example Response
+
+```json
+{
+  "status": "ok",
+  "error": [],
+  "method": "list",
+  "result": [
+    "http://img.youtube.com/vi/iqPqylKy-bY/0.jpg",
+    "https://i.ytimg.com/vi/zbjIwBggt2k/hqdefault.jpg",
+    "https://s-media-cache-ak0.pinimg.com/736x/3d/67/6d/3d676d3f7f3031c9fd91c10b17d56afe.jpg"
+  ]
+}
+```
+
+---
+
+### GET `/ping`
+
+Check for the health of the server.
+
+#### Example Response
+
+```json
+{
+  "status": "ok",
+  "error": [],
+  "method": "ping",
+  "result": []
+}
+```
 
 ## Development
 
