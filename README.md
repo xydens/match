@@ -4,11 +4,13 @@
 
 <p align="center"><a href="http://kubernetes.io"><img src="https://img.shields.io/badge/kubernetes-ready-brightgreen.svg?style=flat" alt="Kubernetes shield" /></a></p>
 
-## Installation
+**Pavlov Match** makes it easy to search for images that look similar to each other. Using a state-of-the-art perceptual hash, it is invariant to scaling and rotation. Its HTTP API is quick to integrate and flexible for a number of reverse image search applications. Kubernetes and Elasticsearch allow Match to scale to billions of images with ease while giving you full control over where your data is stored.
+
+## Getting Started
 
     $ docker run -e ELASTICSEARCH_URL=https://daisy.us-west-1.es.amazonaws.com -it pavlov/match
 
-Match is packaged as a Docker container, making it highly portable and scalable to billions of images. You can configure a few options using environment variables:
+Match is packaged as a Docker container ([pavlov/match](https://hub.docker.com/r/pavlov/match/) on Docker Hub), making it highly portable and scalable to billions of images. You can configure a few options using environment variables:
 
 * **ELASTICSEARCH_URL** *(required)*
 
@@ -199,7 +201,7 @@ Searches for a similar image in the database. Scores range from 0 to 100, with 1
 
 ### POST `/compare`
 
-Searches for a similar image in the database. Scores range from 0 to 100, with 100 being a perfect match.
+Compares two images, returning a score for their similarity. Scores range from 0 to 100, with 100 being a perfect match.
 
 #### Parameters
 
@@ -219,6 +221,7 @@ Searches for a similar image in the database. Scores range from 0 to 100, with 1
       "score": 99.0
     }
   ]
+}
 ```
 
 ---
