@@ -158,7 +158,7 @@ Searches for a similar image in the database. Scores range from 0 to 100, with 1
 
 ### POST `/compare`
 
-Searches for a similar image in the database. Scores range from 0 to 100, with 100 being a perfect match.
+Compares two images, returning a score for their similarity. Scores range from 0 to 100, with 100 being a perfect match.
 
 #### Parameters
 
