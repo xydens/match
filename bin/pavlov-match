@@ -1,2 +1,0 @@
-#! /bin/bash
-cd /app/python && gunicorn -w $WORKER_COUNT server:app
