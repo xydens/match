@@ -178,6 +178,7 @@ Searches for a similar image in the database. Scores range from 0 to 100, with 1
       "score": 99.0
     }
   ]
+}
 ```
 
 ---
