@@ -109,7 +109,7 @@ def compare_handler():
     return json.dumps({
         'status': 'ok',
         'error': [],
-        'method': 'count',
+        'method': 'compare',
         'result': [{ 'score': score }]
     })
 
