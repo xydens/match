@@ -26,12 +26,21 @@ Match is packaged as a Docker container, making it highly portable and scalable 
 
   The number of gunicorn worker forks to maintain in each Docker container.
 
-### Using in a Kubernetes cluster
+### One-command deployment with spread
 
-Match is particularly awesomesauce when integrated into the Kubernetes container orchestration architecture. You can configure the service and replication controller like so:
+Match is particularly awesomesauce when integrated into the Kubernetes container orchestration architecture. [`spread`](https://github.com/redspread/spread) makes it easy to get Match up and running quickly:
+
+    $ go get rsprd.com/spread/cmd/spread
+    $ git clone https://github.com/pavlovml/match
+    $ vim .k2e/secret.yml # configure me
+    $ spread deploy .
+
+### Using in a custom Kubernetes cluster
+
+You can configure the service, replication controller, and secret like so:
 
 ```yaml
-# match-svc.yaml
+# match-service.yml
 apiVersion: v1
 kind: Service
 metadata:
@@ -47,7 +56,7 @@ spec:
 ```
 
 ```yaml
-# match-rc.yaml
+# match-rc.yml
 apiVersion: v1
 kind: ReplicationController
 metadata:
@@ -68,8 +77,40 @@ spec:
         ports:
         - containerPort: 80
         env:
+        - name: WORKER_COUNT
+          valueFrom:
+            secretKeyRef:
+              name: match
+              key: WORKER_COUNT
         - name: ELASTICSEARCH_URL
-          value: https://daisy.us-west-1.es.amazonaws.com
+          valueFrom:
+            secretKeyRef:
+              name: match
+              key: ELASTICSEARCH_URL
+        - name: ELASTICSEARCH_INDEX
+          valueFrom:
+            secretKeyRef:
+              name: match
+              key: ELASTICSEARCH_INDEX
+        - name: ELASTICSEARCH_DOC_TYPE
+          valueFrom:
+            secretKeyRef:
+              name: match
+              key: ELASTICSEARCH_DOC_TYPE
+```
+
+```yaml
+# match-secret.yml
+apiVersion: v1
+kind: Secret
+metadata:
+  namespace: default
+  name: match
+data:
+  WORKER_COUNT: 4
+  ELASTICSEARCH_URL: https://daisy.us-west-1.es.amazonaws.com # change me
+  ELASTICSEARCH_INDEX: images
+  ELASTICSEARCH_DOC_TYPE: images
 ```
 
 ## API
