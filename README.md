@@ -28,9 +28,49 @@ Match is packaged as a Docker container, making it highly portable and scalable 
 
 ### Using in a Kubernetes cluster
 
-Match is particularly awesomesauce when integrated into the Kubernetes container orchestration architecture.
+Match is particularly awesomesauce when integrated into the Kubernetes container orchestration architecture. You can configure the service and replication controller like so:
 
-**Coming soon...**
+```yaml
+# match-svc.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: default
+  name: match
+spec:
+  ports:
+  - name: http
+    port: 80
+    protocol: TCP
+  selector:
+    app: match
+```
+
+```yaml
+# match-rc.yaml
+apiVersion: v1
+kind: ReplicationController
+metadata:
+  namespace: default
+  name: match
+spec:
+  replicas: 4
+  selector:
+    app: match
+  template:
+    metadata:
+      labels:
+        app: match
+    spec:
+      containers:
+      - name: match
+        image: pavlov/match:latest
+        ports:
+        - containerPort: 80
+        env:
+        - name: ELASTICSEARCH_URL
+          value: https://daisy.us-west-1.es.amazonaws.com
+```
 
 ## API
 
