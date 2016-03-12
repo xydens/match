@@ -54,7 +54,7 @@ metadata:
   namespace: default
   name: match
 spec:
-  replicas: 4
+  replicas: 2
   selector:
     app: match
   template:
