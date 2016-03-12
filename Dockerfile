@@ -10,12 +10,10 @@ RUN apt-get update && \
 
 # install
 RUN mkdir -p /app
-COPY python/* /app
-RUN pip install /app/python && \
-    ln -s /app/bin/pavlov-match /usr/local/bin/pavlov-match
+WORKDIR /app
+COPY src .
 
 # run
-ENV PORT 80
 EXPOSE 80
-WORKDIR /app
-CMD gunicorn -w ${WORKER_COUNT:-4} server:app
+ENV PORT 80
+CMD gunicorn -w ${WORKER_COUNT:-4} wsgi:app

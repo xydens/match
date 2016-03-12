@@ -1,8 +1,7 @@
-from image_match.goldberg import ImageSignature
+from goldberg import ImageSignature
 from itertools import product
 from operator import itemgetter
 import numpy as np
-
 
 class SignatureDatabaseBase(object):
     """Base class for storing and searching image signatures in a database
@@ -265,7 +264,6 @@ class SignatureDatabaseBase(object):
                 s.remove(x['id'])
         return r
 
-
 def make_record(path, gis, k, N, img=None, bytestream=False):
     """Makes a record suitable for database insertion.
 
@@ -330,7 +328,6 @@ def make_record(path, gis, k, N, img=None, bytestream=False):
 
     return record
 
-
 def get_words(array, k, N):
     """Gets N words of length k from an array.
 
@@ -377,7 +374,6 @@ def get_words(array, k, N):
 
     return words
 
-
 def words_to_int(word_array):
     """Converts a simplified word to an integer
 
@@ -407,7 +403,6 @@ def words_to_int(word_array):
     # integer represntation is strictly non-negative and unique
     return np.dot(word_array + 1, coding_vector)
 
-
 def max_contrast(array):
     """Sets all positive values to one and all negative values to -1.
 
@@ -420,7 +415,6 @@ def max_contrast(array):
     array[array < 0] = -1
 
     return None
-
 
 def normalized_distance(_target_array, _vec, nan_value=1.0):
     """Compute normalized distance to many points.

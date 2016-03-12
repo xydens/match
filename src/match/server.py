@@ -1,7 +1,7 @@
 from elasticsearch import Elasticsearch
 from flask import Flask, request
-from image_match.elasticsearch_driver import SignatureES
-from image_match.goldberg import ImageSignature
+from elasticsearch_driver import SignatureES
+from goldberg import ImageSignature
 import json
 import os
 
@@ -19,14 +19,16 @@ gis = ImageSignature()
 # Helpers
 
 def ids_with_path(path):
-    matches = es.search(
-            index=es_index,
-            _source='_id',
-            q='path:' + json.dumps(path))
+    matches = es.search(index=es_index,
+                        _source='_id',
+                        q='path:' + json.dumps(path))
     return [m['_id'] for m in matches['hits']['hits']]
 
 def paths_at_location(offset, limit):
-    search = es.search(index=es_index, from_=offset, size=limit, _source='path')
+    search = es.search(index=es_index,
+                       from_=offset,
+                       size=limit,
+                       _source='path')
     return [h['_source']['path'] for h in search['hits']['hits']]
 
 def count_images():
@@ -181,10 +183,3 @@ def page_not_found(e):
         'method': '',
         'result': []
     }), 500
-
-# =============================================================================
-# Run!
-
-if __name__ == "__main__":
-    port = int(os.environ.get('PORT', 3000))
-    app.run(host='0.0.0.0', port=port)

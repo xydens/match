@@ -3,7 +3,6 @@ from signature_database_base import normalized_distance
 from datetime import datetime
 import numpy as np
 
-
 class SignatureES(SignatureDatabaseBase):
     """Elasticsearch driver for image-match
 
@@ -88,4 +87,3 @@ class SignatureES(SignatureDatabaseBase):
     def insert_single_record(self, rec):
         rec['timestamp'] = datetime.now()
         self.es.index(index=self.index, doc_type=self.doc_type, body=rec)
-
