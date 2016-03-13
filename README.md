@@ -4,7 +4,7 @@
 
 <p align="center"><a href="http://kubernetes.io"><img src="https://img.shields.io/badge/kubernetes-ready-brightgreen.svg?style=flat" alt="Kubernetes shield" /></a></p>
 
-**Pavlov Match** makes it easy to search for images that look similar to each other. Using a state-of-the-art perceptual hash, it is invariant to scaling and rotation. Its HTTP API is quick to integrate and flexible for a number of reverse image search applications. Kubernetes and Elasticsearch allow Match to scale to billions of images with ease while giving you full control over where your data is stored.
+**Pavlov Match** makes it easy to search for images that look similar to each other. Using a state-of-the-art perceptual hash, it is invariant to scaling and rotation. Its HTTP API is quick to integrate and flexible for a number of reverse image search applications. Kubernetes and Elasticsearch allow Match to scale to billions of images with ease while giving you full control over where your data is stored. Match uses the awesome [ascribe/image-match](https://github.com/ascribe/image-match) under the hood for most of the image search legwork.
 
 ## Getting Started
 
@@ -83,22 +83,22 @@ spec:
           valueFrom:
             secretKeyRef:
               name: match
-              key: WORKER_COUNT
+              key: worker-count
         - name: ELASTICSEARCH_URL
           valueFrom:
             secretKeyRef:
               name: match
-              key: ELASTICSEARCH_URL
+              key: elasticsearch.url
         - name: ELASTICSEARCH_INDEX
           valueFrom:
             secretKeyRef:
               name: match
-              key: ELASTICSEARCH_INDEX
+              key: elasticsearch.index
         - name: ELASTICSEARCH_DOC_TYPE
           valueFrom:
             secretKeyRef:
               name: match
-              key: ELASTICSEARCH_DOC_TYPE
+              key: elasticsearch.doc-type
 ```
 
 ```yaml
@@ -109,10 +109,17 @@ metadata:
   namespace: default
   name: match
 data:
-  WORKER_COUNT: 4
-  ELASTICSEARCH_URL: https://daisy.us-west-1.es.amazonaws.com # change me
-  ELASTICSEARCH_INDEX: images
-  ELASTICSEARCH_DOC_TYPE: images
+  # 4, base64 encoded
+  worker-count: NA==
+
+  # https://daisy.us-west-1.es.amazonaws.com (change me)
+  elasticsearch.url: aHR0cHM6Ly9zZWFyY2gtcmV2ZXJzZS1pbWFnZS1zZWFyY2gta2g1Z21pcnV0YTJ5amxpN2pxeDdneWdncnEudXMtd2VzdC0xLmVzLmFtYXpvbmF3cy5jb20=
+
+  # images
+  elasticsearch.index: aW1hZ2Vz
+
+  # images
+  elasticsearch.doc-type: aW1hZ2Vz
 ```
 
 ## API

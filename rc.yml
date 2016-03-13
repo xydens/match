@@ -22,19 +22,19 @@ spec:
           valueFrom:
             secretKeyRef:
               name: match
-              key: WORKER_COUNT
+              key: worker-count
         - name: ELASTICSEARCH_URL
           valueFrom:
             secretKeyRef:
               name: match
-              key: ELASTICSEARCH_URL
+              key: elasticsearch.url
         - name: ELASTICSEARCH_INDEX
           valueFrom:
             secretKeyRef:
               name: match
-              key: ELASTICSEARCH_INDEX
+              key: elasticsearch.index
         - name: ELASTICSEARCH_DOC_TYPE
           valueFrom:
             secretKeyRef:
               name: match
-              key: ELASTICSEARCH_DOC_TYPE
+              key: elasticsearch.doc-type
