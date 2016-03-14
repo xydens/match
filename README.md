@@ -6,6 +6,13 @@
 
 **Pavlov Match** makes it easy to search for images that look similar to each other. Using a state-of-the-art perceptual hash, it is invariant to scaling and 90 degree rotations. Its HTTP API is quick to integrate and flexible for a number of reverse image search applications. Kubernetes and Elasticsearch allow Match to scale to billions of images with ease while giving you full control over where your data is stored. Match uses the awesome [ascribe/image-match](https://github.com/ascribe/image-match) under the hood for most of the image search legwork.
 
+1. [Getting Started](https://github.com/pavlovml/match#getting-started)
+  * [One-command deployment with spread](https://github.com/pavlovml/match#one-command-deployment-with-spread)
+  * [Using in your own Kubernetes cluster](https://github.com/pavlovml/match#using-in-your-own-kubernetes-cluster)
+2. [API](https://github.com/pavlovml/match#api)
+3. [Development](https://github.com/pavlovml/match#development)
+4. [License and Acknowledgements](https://github.com/pavlovml/match#license-and-acknowledgements)
+
 ## Getting Started
 
     $ docker run -e ELASTICSEARCH_URL=https://daisy.us-west-1.es.amazonaws.com -it pavlov/match
@@ -37,7 +44,7 @@ Match is particularly awesomesauce when integrated into the Kubernetes container
     $ vim .k2e/secret.yml # configure me
     $ spread deploy .
 
-### Using in a custom Kubernetes cluster
+### Using in your own Kubernetes cluster
 
 You can configure the service, replication controller, and secret like so:
 
