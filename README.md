@@ -133,6 +133,14 @@ data:
 
 Match has a simple HTTP API. All request parameters are specified via `application/x-www-form-urlencoded` or `multipart/form-data`.
 
+* [POST `/add`](#post-add)
+* [DELETE `/delete`](#delete-delete)
+* [POST `/search`](#post-search)
+* [POST `/compare`](#post-compare)
+* [GET `/count`](#get-count)
+* [GET `/list`](#get-list)
+* [GET `/ping`](#get-ping)
+
 ---
 
 ### POST `/add`
