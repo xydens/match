@@ -81,7 +81,7 @@ def delete_handler():
 @app.route('/search', methods=['POST'])
 def search_handler():
     img, bs = get_image('url', 'image')
-    all_orient = request.form.get('check_horizontal_flip', True) == 'true'
+    all_orient = request.form.get('all_orientations', 'true') == 'true'
 
     matches = ses.search_image(
             path=img,

@@ -2,9 +2,9 @@
 
 <p align="center"><strong>Scalable reverse image search</strong><br /><em>built on <a href="http://kubernetes.io/">Kubernetes</a> and <a href="https://www.elastic.co/">Elasticsearch</a></em></p>
 
-<p align="center"><a href="http://kubernetes.io"><img src="https://img.shields.io/badge/kubernetes-ready-brightgreen.svg?style=flat" alt="Kubernetes shield" /></a></p>
+<p align="center"><a href="https://github.com/pavlovml/match/stargazers"><img src="https://img.shields.io/github/stars/pavlovml/match.svg?style=flat&label=Star" alt="GitHub stars" /></a><a href="https://hub.docker.com/r/pavlov/match/"><img src="https://img.shields.io/docker/pulls/pavlov/match.svg" alt="Docker Pulls" /></a><a href="http://kubernetes.io"><img src="https://img.shields.io/badge/kubernetes-ready-brightgreen.svg?style=flat" alt="Kubernetes shield" /></a></p>
 
-**Pavlov Match** makes it easy to search for images that look similar to each other. Using a state-of-the-art perceptual hash, it is invariant to scaling and rotation. Its HTTP API is quick to integrate and flexible for a number of reverse image search applications. Kubernetes and Elasticsearch allow Match to scale to billions of images with ease while giving you full control over where your data is stored. Match uses the awesome [ascribe/image-match](https://github.com/ascribe/image-match) under the hood for most of the image search legwork.
+**Pavlov Match** makes it easy to search for images that look similar to each other. Using a state-of-the-art perceptual hash, it is invariant to scaling and 90 degree rotations. Its HTTP API is quick to integrate and flexible for a number of reverse image search applications. Kubernetes and Elasticsearch allow Match to scale to billions of images with ease while giving you full control over where your data is stored. Match uses the awesome [ascribe/image-match](https://github.com/ascribe/image-match) under the hood for most of the image search legwork.
 
 ## Getting Started
 
@@ -187,6 +187,10 @@ Searches for a similar image in the database. Scores range from 0 to 100, with 1
 * **url** or **image** *(required)*
 
   The image to add to the database. It may be provided as a URL via `url` or as a `multipart/form-data` file upload via `image`.
+
+* **all_orientations** *(default: true)*
+
+  Whether or not to search for similar 90 degree rotations of the image.
 
 #### Example Response
 
