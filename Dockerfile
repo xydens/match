@@ -6,7 +6,8 @@ RUN apt-get update && \
     apt-get install -y libopenblas-dev gfortran && \
     pip install numpy && \
     pip install scipy && \
-    pip install scikit-image cairosvg elasticsearch flask gunicorn
+    pip install scikit-image cairosvg elasticsearch flask gunicorn && \
+    pip install git+https://github.com/ascribe/image-match.git@pavlolvml_interface
 
 # install
 RUN mkdir -p /app
