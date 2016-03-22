@@ -7,7 +7,7 @@ RUN apt-get update && \
     pip install numpy && \
     pip install scipy && \
     pip install scikit-image cairosvg elasticsearch flask gunicorn && \
-    pip install git+https://github.com/ascribe/image-match.git@pavlolvml_interface
+    pip install git+https://github.com/ascribe/image-match.git@v0.2
 
 # install
 RUN mkdir -p /app
