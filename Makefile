@@ -13,6 +13,7 @@ push: build
 	docker push $(DOCKER_TAG)
 
 run: build
-	docker run -e ELASTICSEARCH_URL=$(ELASTICSEARCH_URL) \
-	           -p $(PORT):80 \
-	           -it $(DOCKER_TAG)
+	docker run \
+		-e ELASTICSEARCH_URL \
+		-p $(PORT):80 \
+		-it $(DOCKER_TAG)
