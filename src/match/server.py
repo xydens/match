@@ -8,12 +8,18 @@ import os
 # =============================================================================
 # Globals
 
+
 app = Flask(__name__)
-es = Elasticsearch([os.environ['ELASTICSEARCH_URL']])
+es = Elasticsearch([os.environ.get('ELASTICSEARCH_URL',
+                                   'http://elasticsearch')])
 es_index = os.environ.get('ELASTICSEARCH_INDEX', 'images')
 es_doc_type = os.environ.get('ELASTICSEARCH_DOC_TYPE', 'images')
 ses = SignatureES(es, index=es_index, doc_type=es_doc_type)
 gis = ImageSignature()
+
+# Try to create the index and ignore IndexAlreadyExistsException
+# if the index already exists
+es.indices.create(index=es_index, ignore=400)
 
 # =============================================================================
 # Helpers
@@ -53,10 +59,14 @@ def get_image(url_field, file_field):
 @app.route('/add', methods=['POST'])
 def add_handler():
     path = request.form['filepath']
+    try:
+        metadata = json.loads(request.form['metadata'])
+    except KeyError:
+        metadata = None
     img, bs = get_image('url', 'image')
 
     old_ids = ids_with_path(path)
-    ses.add_image(path, img, bytestream=bs)
+    ses.add_image(path, img, bytestream=bs, metadata=metadata)
     delete_ids(old_ids)
 
     return json.dumps({
@@ -94,7 +104,8 @@ def search_handler():
         'method': 'search',
         'result': [{
             'score': dist_to_percent(m['dist']),
-            'filepath': m['path']
+            'filepath': m['path'],
+            'metadata': m['metadata']
         } for m in matches]
     })
 

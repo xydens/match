@@ -16,16 +16,33 @@
 
 ## Getting Started
 
-    $ docker run -e ELASTICSEARCH_URL=https://daisy.us-west-1.es.amazonaws.com -it pavlov/match
+If you already have ElasticSearch running:
+```
+$ docker run -e ELASTICSEARCH_URL=https://daisy.us-west-1.es.amazonaws.com -it pavlov/match
+```
+
+If you want to run ElasticSearch in another docker container and link it to our `pavlov/match` container (use the `-p` option to export the ports from the containers to the host):
+```
+$ docker run --name -p 59200:9200 my_elasticsearch_db elasticsearch
+$ docker run --link -p 8888:80 my_elasticsearch_db:elasticsearch pavlov/match
+```
+
+or, if you have [`docker-compose`](https://docs.docker.com/compose/) installed on your system, type:
+```
+$ docker-compose up
+```
+
+(All the commands can be run using `make`. Take a look to the `Makefile` to check the options.)
 
 Match is packaged as a Docker container ([pavlov/match](https://hub.docker.com/r/pavlov/match/) on Docker Hub), making it highly portable and scalable to billions of images. You can configure a few options using environment variables:
 
-* **ELASTICSEARCH_URL** *(required)*
+* **ELASTICSEARCH_URL** *(default: `http://elasticsearch`)*
 
   A URL pointing to the Elasticsearch database where image signatures are to be stored. If you don't want to host your own Elasticsearch cluster, consider using [AWS Elasticsearch Service](https://aws.amazon.com/elasticsearch-service/). That's what we use.
+  Note: in order to allow containers linking, the default value is set to `http://elasticsearch`
 
 * **ELASTICSEARCH_INDEX** *(default: images)*
- 
+
   The index in the Elasticsearch database where image signatures are to be stored.
 
 * **ELASTICSEARCH_DOC_TYPE** *(default: images)*
@@ -35,12 +52,7 @@ Match is packaged as a Docker container ([pavlov/match](https://hub.docker.com/r
 * **WORKER_COUNT** *(default: 4)*
 
   The number of gunicorn worker forks to maintain in each Docker container.
-  
-### Setting up Elasticsearch
 
-If you're setting up Match for the first time on your Elasticsearch cluster, you'll have to create an index to store image signatures (default: `images`). Assuming Elasticsearch is running locally, it can be created by executing:
-
-    $ curl -XPUT 'http://localhost:9200/images/'
 
 ### One-command deployment with spread
 
@@ -163,6 +175,10 @@ Adds an image signature to the database.
 * **filepath** *(required)*
 
   The path to save the image to in the database. If another image already exists at the given path, it will be overwritten.
+
+* **metadata** *(default: None)*
+
+  An arbitrary JSON object featuring meta data to attach to the image.
 
 #### Example Response
 
