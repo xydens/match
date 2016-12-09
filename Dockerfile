@@ -1,5 +1,5 @@
 FROM python:3.5
-MAINTAINER Alex Kern <alex@pavlovml.com>
+MAINTAINER Alex Kern <alex@pavlov.ai>
 
 # deps
 RUN apt-get update && \
@@ -7,7 +7,7 @@ RUN apt-get update && \
     pip install numpy && \
     pip install scipy && \
     pip install flask gunicorn && \
-    pip install image-match
+    pip install image-match==1.1.0
 
 # install
 RUN mkdir -p /app
