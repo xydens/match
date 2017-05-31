@@ -4,9 +4,7 @@ services:
     image: pavlov/match:latest
     ports:
     - 8888:8888
-    environment:
-    - PORT=8888
-    command: ["/wait-for-it.sh", "-t", "60", "elasticsearch:9200", "--", "env", "PORT=8888", "python", "/server.py"]
+    command: ["/wait-for-it.sh", "-t", "60", "elasticsearch:9200", "--", "gunicorn", "-b", "0.0.0.0:8888", "-w", "4", "server:app"]
     links:
     - elasticsearch
   elasticsearch:

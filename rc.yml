@@ -17,6 +17,8 @@ spec:
         ports:
         - containerPort: 80
         env:
+        - name: WORKER_COUNT
+          value: "4"
         - name: ELASTICSEARCH_URL
           valueFrom:
             secretKeyRef:

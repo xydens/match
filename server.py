@@ -1,6 +1,5 @@
 from elasticsearch import Elasticsearch
 from flask import Flask, request
-from gevent.pywsgi import WSGIServer
 from image_match.elasticsearch_driver import SignatureES
 from image_match.goldberg import ImageSignature
 import json
@@ -10,7 +9,6 @@ import sys
 # =============================================================================
 # Globals
 
-port = int(os.environ['PORT'])
 es_url = os.environ['ELASTICSEARCH_URL']
 es_index = os.environ['ELASTICSEARCH_INDEX']
 es_doc_type = os.environ['ELASTICSEARCH_DOC_TYPE']
@@ -197,10 +195,3 @@ def server_error(e):
         'method': '',
         'result': []
     }), 500
-
-# =============================================================================
-# Server
-
-if __name__ == "__main__":
-    print('listening on port {}'.format(port), flush=True)
-    WSGIServer(('0.0.0.0', port), app).serve_forever()

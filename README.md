@@ -7,8 +7,6 @@
 **Pavlov Match** makes it easy to search for images that look similar to each other. Using a state-of-the-art perceptual hash, it is invariant to scaling and 90 degree rotations. Its HTTP API is quick to integrate and flexible for a number of reverse image search applications. Kubernetes and Elasticsearch allow Match to scale to billions of images with ease while giving you full control over where your data is stored. Match uses the awesome [ascribe/image-match](https://github.com/ascribe/image-match) under the hood for most of the image search legwork.
 
 1. [Getting Started](#getting-started)
-  * [Setting up Elasticsearch](#setting-up-elasticsearch)
-  * [Using in your own Kubernetes cluster](#using-in-your-own-kubernetes-cluster)
 2. [API](#api)
 3. [Development](#development)
 4. [License and Acknowledgements](#license-and-acknowledgements)
@@ -26,6 +24,10 @@ $ make dev
 ```
 
 Match is packaged as a Docker container ([pavlov/match](https://hub.docker.com/r/pavlov/match/) on Docker Hub), making it highly portable and scalable to billions of images. You can configure a few options using environment variables:
+
+* **WORKER_COUNT** *(default: `4`)*
+
+  The number of gunicorn workers to spin up.
 
 * **ELASTICSEARCH_URL** *(default: `elasticsearch:9200`)*
 
@@ -80,6 +82,8 @@ spec:
         ports:
         - containerPort: 80
         env:
+        - name: WORKER_COUNT
+          value: "4"
         - name: ELASTICSEARCH_URL
           valueFrom:
             secretKeyRef:
