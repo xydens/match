@@ -1,14 +1,15 @@
 from concurrent.futures import ThreadPoolExecutor
+import argparse
 import glob
 import random
 import requests
 import sys
 import time
 import uuid
-import argparse
 
 parser = argparse.ArgumentParser(description='Benchmark Pavlov Match.')
 parser.add_argument('images_dir', metavar='IMAGES_DIR', type=str, help='directory with images to test')
+parser.add_argument('-u', dest='url', default='http://localhost:8888', type=str, help='the URL of Match')
 parser.add_argument('-i', dest='iterations', default=1000, type=int, help='number of iterations during the benchmark')
 parser.add_argument('-c', dest='concurrency', default=10, type=int, help='concurrency of requests during the benchmark')
 args = parser.parse_args()
@@ -20,8 +21,8 @@ def run(i):
     start = time.time()
     img = random.choice(images)
     filepath = uuid.uuid4()
-    requests.post('http://localhost:8888/add', files={'image': open(img, 'r')}, data={'filepath': filepath})
-    requests.post('http://localhost:8888/search', files={'image': open(img, 'r')})
+    requests.post(args.url + '/add', files={'image': open(img, 'r')}, data={'filepath': filepath})
+    requests.post(args.url + '/search', files={'image': open(img, 'r')})
     end = time.time()
     print('elapsed: {}'.format(end - start))
 
