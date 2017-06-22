@@ -18,4 +18,11 @@ ENV PORT=80 \
     ELASTICSEARCH_URL=elasticsearch:9200 \
     ELASTICSEARCH_INDEX=images \
     ELASTICSEARCH_DOC_TYPE=images
-CMD gunicorn -b 0.0.0.0:${PORT} -w ${WORKER_COUNT} server:app
+
+CMD gunicorn \
+    -t 60 \
+    --access-logfile - \
+    --access-logformat '%(h)s %(l)s %(u)s %(t)s "%(r)s" %(s)s %(b)s "%(f)s" "%(a)s" - %(D)s' \
+    -b 0.0.0.0:${PORT} \
+    -w ${WORKER_COUNT} \
+    server:app
