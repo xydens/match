@@ -12,6 +12,7 @@ import sys
 es_url = os.environ['ELASTICSEARCH_URL']
 es_index = os.environ['ELASTICSEARCH_INDEX']
 es_doc_type = os.environ['ELASTICSEARCH_DOC_TYPE']
+all_orientations = os.environ['ALL_ORIENTATIONS']
 
 app = Flask(__name__)
 es = Elasticsearch([es_url], verify_certs=True, timeout=60, max_retries=10, retry_on_timeout=True)
@@ -92,11 +93,11 @@ def delete_handler():
 @app.route('/search', methods=['POST'])
 def search_handler():
     img, bs = get_image('url', 'image')
-    all_orient = request.form.get('all_orientations', 'true') == 'true'
+    ao = request.form.get('all_orientations', all_orientations) == 'true'
 
     matches = ses.search_image(
             path=img,
-            all_orientations=all_orient,
+            all_orientations=ao,
             bytestream=bs)
 
     return json.dumps({
