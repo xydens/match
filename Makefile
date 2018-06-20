@@ -1,6 +1,6 @@
 .PHONY: all build push run dev
 
-DOCKER_TAG ?= pavlov/match:latest
+DOCKER_TAG ?= dsys/match:latest
 
 export PORT ?= 8888
 export ELASTICSEARCH_URL ?= elasticsearch:9200

@@ -1,5 +1,5 @@
 FROM python:3
-MAINTAINER Alex Kern <alex@pavlov.ai>
+MAINTAINER Alex Kern <alex@distributedsystems.com>
 
 RUN apt-get update && \
     apt-get install -y libopenblas-dev gfortran && \

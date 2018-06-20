@@ -13,7 +13,7 @@ spec:
     spec:
       containers:
       - name: match
-        image: pavlov/match:latest
+        image: dsys/match:latest
         ports:
         - containerPort: 80
         env:

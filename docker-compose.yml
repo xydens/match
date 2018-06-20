@@ -1,7 +1,7 @@
 version: '2'
 services:
   match:
-    image: pavlov/match:latest
+    image: dsys/match:latest
     ports:
     - 8888:8888
     command: ["/wait-for-it.sh", "-t", "60", "elasticsearch:9200", "--", "gunicorn", "-b", "0.0.0.0:8888", "-w", "4", "server:app"]
