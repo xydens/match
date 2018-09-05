@@ -15,7 +15,7 @@ es_doc_type = os.environ['ELASTICSEARCH_DOC_TYPE']
 all_orientations = os.environ['ALL_ORIENTATIONS']
 
 app = Flask(__name__)
-es = Elasticsearch([es_url], verify_certs=True, timeout=60, max_retries=10, retry_on_timeout=True)
+es = Elasticsearch([es_url], verify_certs=False, timeout=60, max_retries=10, retry_on_timeout=True)
 ses = SignatureES(es, index=es_index, doc_type=es_doc_type)
 gis = ImageSignature()
 
